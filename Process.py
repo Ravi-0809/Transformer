@@ -10,7 +10,7 @@ def read_data(opt):
     
     if opt.src_data is not None:
         try:
-            opt.src_data = open(opt.src_data).read().strip().split('\n')
+            opt.src_data = open(opt.src_data, encoding = 'utf-8').read().strip().split('\n')
         except Exception as e:
             print(e)
             print("error: '" + opt.src_data + "' file not found")
@@ -18,7 +18,7 @@ def read_data(opt):
     
     if opt.trg_data is not None:
         try:
-            opt.trg_data = open(opt.trg_data).read().strip().split('\n')
+            opt.trg_data = open(opt.trg_data, encoding = 'utf-8').read().strip().split('\n')
         except Exception as e:
             print(e)
             print("error: '" + opt.trg_data + "' file not found")
