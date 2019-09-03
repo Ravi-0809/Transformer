@@ -43,7 +43,7 @@ def translate_sentence(sentence, model, opt, SRC, TRG):
             indexed.append(get_synonym(tok, SRC))
     sentence = Variable(torch.LongTensor([indexed]))
     if opt.device == 0:
-        sentence = sentence.cuda()
+        sentence = sentence.to(opt.device)
     
     sentence = beam_search(sentence, model, SRC, TRG, opt)
 

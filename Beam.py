@@ -12,7 +12,7 @@ def init_vars(src, model, SRC, TRG, opt):
     
     outputs = torch.LongTensor([[init_tok]])
     if opt.device == 0:
-        outputs = outputs.cuda()
+        outputs = outputs.to(opt.device)
     
     trg_mask = nopeak_mask(1, opt)
     
@@ -25,13 +25,13 @@ def init_vars(src, model, SRC, TRG, opt):
     
     outputs = torch.zeros(opt.k, opt.max_len).long()
     if opt.device == 0:
-        outputs = outputs.cuda()
+        outputs = outputs.to(opt.device)
     outputs[:, 0] = init_tok
     outputs[:, 1] = ix[0]
     
     e_outputs = torch.zeros(opt.k, e_output.size(-2),e_output.size(-1))
     if opt.device == 0:
-        e_outputs = e_outputs.cuda()
+        e_outputs = e_outputs.to(opt.device)
     e_outputs[:, :] = e_output[0]
     
     return outputs, e_outputs, log_scores
@@ -71,7 +71,7 @@ def beam_search(src, model, SRC, TRG, opt):
         outputs, log_scores = k_best_outputs(outputs, out, log_scores, i, opt.k)
         
         ones = (outputs==eos_tok).nonzero() # Occurrences of end symbols for all input sentences.
-        sentence_lengths = torch.zeros(len(outputs), dtype=torch.long).cuda()
+        sentence_lengths = torch.zeros(len(outputs), dtype=torch.long).to(opt.device)
         for vec in ones:
             i = vec[0]
             if sentence_lengths[i]==0: # First end symbol has not been found yet
