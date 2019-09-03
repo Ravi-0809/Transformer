@@ -15,7 +15,9 @@ def train_model(model, opt):
     start = time.time()
     if opt.checkpoint > 0:
         cptime = time.time()
-                 
+    
+    # avg_loss = 0
+
     for epoch in range(opt.epochs):
 
         total_loss = 0
@@ -43,7 +45,7 @@ def train_model(model, opt):
             
             total_loss += loss.item()
             
-            if (i + 1) % opt.printevery == 0:
+            if i % opt.printevery == 0:
                  p = int(100 * (i + 1) / opt.train_len)
                  avg_loss = total_loss/opt.printevery
                  if opt.floyd is False:
