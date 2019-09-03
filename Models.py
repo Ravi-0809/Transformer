@@ -67,7 +67,7 @@ def get_model(opt, src_vocab, trg_vocab):
                 nn.init.xavier_uniform_(p) 
     
     if opt.device == 0:
-        model = model.to(opt.device)
+        model = model.to(torch.device(opt.device))
     
     return model
     
